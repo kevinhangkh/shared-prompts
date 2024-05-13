@@ -3,10 +3,32 @@
 import Link from 'next/link'; // To navigate to other pages
 import Image from 'next/image'; // To optimize images
 import { useState, useEffect } from 'react';
-import { signIn, signOut, useSession, getProviders } from 'next-auth/react'; // For authentication
+import {
+  signIn,
+  signOut,
+  useSession,
+  getProviders,
+  LiteralUnion,
+  ClientSafeProvider,
+} from 'next-auth/react'; // For authentication
+import { BuiltInProviderType } from 'next-auth/providers/index';
 
 function Nav() {
   const isUserLoggedIn = false;
+
+  const [providers, setProviders] = useState<Record<
+    LiteralUnion<BuiltInProviderType, string>,
+    ClientSafeProvider
+  > | null>(null);
+
+  useEffect(() => {
+    const getProvidersFromAuth = async () => {
+      const response = await getProviders();
+      setProviders(response);
+    };
+
+    getProvidersFromAuth();
+  }, []);
 
   return (
     <nav className="flex-between w-full mb-16 pt-3">
@@ -29,7 +51,11 @@ function Nav() {
               Create Prompt
             </Link>
 
-            <button type="button" onClick={signOut} className="outline_btn">
+            <button
+              type="button"
+              onClick={() => signOut}
+              className="outline_btn"
+            >
               Sign out
             </button>
 
@@ -44,9 +70,23 @@ function Nav() {
             </Link>
           </div>
         ) : (
-          <></>
+          <>
+            {providers &&
+              Object.values(providers)?.map((provider) => (
+                <button
+                  type="button"
+                  key={provider.name}
+                  onClick={() => signIn(provider.id)}
+                  className="black_btn"
+                >
+                  Sign In
+                </button>
+              ))}
+          </>
         )}
       </div>
+
+      {/* Mobile navigation */}
     </nav>
   );
 }
