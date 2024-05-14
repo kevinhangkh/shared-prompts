@@ -5,26 +5,28 @@ import Link from 'next/link';
 
 import SignIn from './SignIn';
 import { Dispatch, SetStateAction } from 'react';
+import { useSession } from 'next-auth/react';
 
 interface MobileNavProps {
-  isUserLoggedIn: boolean;
   toggleDropdown: boolean;
   setToggleDropdown: Dispatch<SetStateAction<boolean>>;
   signOut(): void;
 }
 
 function MobileNav({
-  isUserLoggedIn,
   toggleDropdown,
   setToggleDropdown,
   signOut,
 }: MobileNavProps) {
+  const { data: session } = useSession();
+  const isUserLoggedIn: boolean = !!session?.user;
+
   return (
     <div className="sm:hidden flex relative">
       {isUserLoggedIn ? (
         <div className="flex">
           <Image
-            src="/assets/images/logo.svg"
+            src={session?.user?.image?.toString()}
             width={37}
             height={37}
             className="rounder-full"

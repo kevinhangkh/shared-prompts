@@ -3,13 +3,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import SignIn from './SignIn';
+import { useSession } from 'next-auth/react';
 
 interface DesktopNavProps {
-  isUserLoggedIn: boolean;
   signOut(): void;
 }
 
-function DesktopNav({ isUserLoggedIn, signOut }: DesktopNavProps) {
+function DesktopNav({ signOut }: DesktopNavProps) {
+
+  const { data: session } = useSession();
+  const isUserLoggedIn: boolean = !!session?.user;
+
   return (
     <div className="sm:flex hidden">
       {isUserLoggedIn ? (
@@ -24,7 +28,7 @@ function DesktopNav({ isUserLoggedIn, signOut }: DesktopNavProps) {
 
           <Link href="/profile" className="">
             <Image
-              src="/assets/images/logo.svg"
+              src={session?.user?.image?.toString()}
               width={37}
               height={37}
               className="rounder-full"

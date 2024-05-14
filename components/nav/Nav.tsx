@@ -9,8 +9,6 @@ import SignIn from './SignIn';
 import MobileNav from './MobileNav';
 
 function Nav() {
-  const isUserLoggedIn = true;
-
   const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
 
   return (
@@ -27,11 +25,10 @@ function Nav() {
       </Link>
 
       {/* Desktop navigation */}
-      <DesktopNav isUserLoggedIn={isUserLoggedIn} signOut={signOut} />
+      <DesktopNav signOut={signOut} />
 
       {/* Mobile navigation */}
       <MobileNav
-        isUserLoggedIn={isUserLoggedIn}
         toggleDropdown={toggleDropdown}
         setToggleDropdown={setToggleDropdown}
         signOut={signOut}
