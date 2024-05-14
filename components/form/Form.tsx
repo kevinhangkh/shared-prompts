@@ -1,11 +1,12 @@
 'use client';
 
+import { Post } from '../../types/Post';
 import Link from 'next/link';
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
 interface FormProps {
   type: string;
-  post: { prompt: string; tag: string };
+  post: Post;
   setPost: Dispatch<SetStateAction<{ prompt: string; tag: string }>>;
   submitting: boolean;
   handleSubmit(event: any): Promise<void>;

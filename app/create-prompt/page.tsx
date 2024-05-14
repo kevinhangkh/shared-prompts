@@ -1,6 +1,7 @@
 'use client';
 
 import Form from '@components/form/Form';
+import { Post } from '../../types/Post';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -10,7 +11,7 @@ function CreatePrompt() {
   const router = useRouter();
 
   const [submitting, setSubmitting] = useState<boolean>(false);
-  const [post, setPost] = useState({
+  const [post, setPost] = useState<Post>({
     prompt: '',
     tag: '',
   });
