@@ -8,7 +8,7 @@ interface FormProps {
   post: { prompt: string; tag: string };
   setPost: Dispatch<SetStateAction<{ prompt: string; tag: string }>>;
   submitting: boolean;
-  handleSubmit(): void;
+  handleSubmit(event: any): Promise<void>;
 }
 
 function Form({ type, post, setPost, submitting, handleSubmit }: FormProps) {
