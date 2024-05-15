@@ -1,5 +1,5 @@
 export type Post = {
-  _id: string;
+  _id?: string;
   creator?: any;
   prompt: string;
   tag: string;
