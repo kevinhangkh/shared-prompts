@@ -5,6 +5,8 @@ import { Post } from '../../types/Post';
 import { useState } from 'react';
 import PromptCardHead from './PromptCardHead';
 import PromptCardBody from './PromptCardBody';
+import { useSession } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
 
 interface PromptCardProps {
   post: Post;
@@ -13,7 +15,15 @@ interface PromptCardProps {
   handleDelete?: (post: Post) => void;
 }
 
-function PromptCard({ post, handleTagClick }: PromptCardProps) {
+function PromptCard({
+  post,
+  handleTagClick,
+  handleEdit,
+  handleDelete,
+}: PromptCardProps) {
+  const { data: session } = useSession();
+  const pathName = usePathname();
+
   const [copied, setCopied] = useState<string>('');
 
   const handleCopy = () => {
@@ -23,6 +33,9 @@ function PromptCard({ post, handleTagClick }: PromptCardProps) {
     // Reset the copy button to initial state after some time
     setTimeout(() => setCopied(''), 3000);
   };
+
+  const postBelongsToCurrentUserAndProfilePage = () =>
+    session?.user.id === post.creator._id && pathName === '/profile';
 
   return (
     <div className="prompt_card">
@@ -44,6 +57,23 @@ function PromptCard({ post, handleTagClick }: PromptCardProps) {
       </div>
 
       <PromptCardBody post={post} handleTagClick={handleTagClick} />
+
+      {postBelongsToCurrentUserAndProfilePage() && (
+        <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
+          <p
+            className="font-inter text-sm green_gradient cursor-pointer"
+            onClick={handleEdit}
+          >
+            Edit
+          </p>
+          <p
+            className="font-inter text-sm orange_gradient cursor-pointer"
+            onClick={handleDelete}
+          >
+            Delete
+          </p>
+        </div>
+      )}
     </div>
   );
 }
