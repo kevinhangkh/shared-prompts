@@ -6,7 +6,9 @@ import { useState } from 'react';
 
 interface PromptCardProps {
   post: Post;
-  handleTagClick(tag: string): void;
+  handleTagClick?: (tag: string) => void;
+  handleEdit?: (post: Post) => void;
+  handleDelete?: (post: Post) => void;
 }
 
 function PromptCard({ post, handleTagClick }: PromptCardProps) {
