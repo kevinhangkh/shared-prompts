@@ -1,22 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
+import { useSession } from 'next-auth/react';
 import { Post } from '../types/Post';
 import { useEffect, useState } from 'react';
 
-interface useFetchUserPostsProps {
-  userId: string;
-}
+const useFetchUserPosts = () => {
+  const { data: session, status } = useSession();
 
-const useFetchUserPosts = (props: useFetchUserPostsProps) => {
-  const { userId } = props || {};
   const [loading, setLoading] = useState<boolean>(false);
   const [posts, setPosts] = useState<Post[]>([]);
 
   const fetchPosts = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/users/${userId}/posts`);
+      const response = await fetch(`/api/users/${session?.user.id}/posts`);
       const data = await response.json();
       setPosts(data);
     } catch (error) {
@@ -27,10 +25,10 @@ const useFetchUserPosts = (props: useFetchUserPostsProps) => {
   };
 
   useEffect(() => {
-    if (userId) {
+    if (status === 'authenticated') {
       fetchPosts();
     }
-  }, [userId]);
+  }, [status]);
 
   return { posts, loading };
 };
