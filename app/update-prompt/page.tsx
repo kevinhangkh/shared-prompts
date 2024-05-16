@@ -5,6 +5,7 @@ import { Post } from '../../types/Post';
 import { useEffect, useState } from 'react';
 import useFetchPostById from '@hooks/useFetchPostById';
 import { useRouter, useSearchParams } from 'next/navigation';
+import useUpdatePost from '@hooks/useUpdatePost';
 
 interface UpdatePromptProps {}
 
@@ -15,6 +16,7 @@ function UpdatePrompt({}: UpdatePromptProps) {
   const router = useRouter();
 
   const { post: fetchedPrompt, loading } = useFetchPostById();
+  const { updatePost, loading: loadingUpdate } = useUpdatePost();
 
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [post, setPost] = useState<Post>({
@@ -33,21 +35,12 @@ function UpdatePrompt({}: UpdatePromptProps) {
     setSubmitting(true);
 
     try {
-      const response = await fetch(`/api/prompt/${promptId}`, {
-        method: 'PATCH',
-        body: JSON.stringify({
-          prompt: post.prompt,
-          tag: post.tag,
-        }),
-      });
-
-      if (response.ok) {
-        router.push('/profile');
-      }
+      await updatePost(post);
     } catch (error) {
       console.log(error);
     } finally {
       setSubmitting(false);
+      router.push('/profile');
     }
   };
 
