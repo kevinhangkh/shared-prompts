@@ -30,7 +30,7 @@ const useFetchUserPosts = () => {
     }
   }, [status]);
 
-  return { posts, loading };
+  return { posts, setPosts, loading };
 };
 
 export default useFetchUserPosts;
