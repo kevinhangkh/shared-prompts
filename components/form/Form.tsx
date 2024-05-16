@@ -53,7 +53,7 @@ function Form({ type, post, setPost, submitting, handleSubmit }: FormProps) {
           <span className="font-satoshi font-semibold text-base text-gray-700">
             Tag {` `}
             <span className="font-satoshi font-normal">
-              (#product, #webdev, #picture, ...)
+              (product, webdev, picture, ...)
             </span>
           </span>
 
