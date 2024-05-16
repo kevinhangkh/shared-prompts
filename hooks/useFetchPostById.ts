@@ -14,7 +14,6 @@ const useFetchPostById = () => {
   const fetchPostById = async () => {
     setLoading(true);
     try {
-      console.log('here', promptId);
       const response = await fetch(`/api/prompt/${promptId}`);
       const data = await response.json();
       setPost(data);
