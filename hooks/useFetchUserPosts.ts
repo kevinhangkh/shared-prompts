@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import { Post } from '../types/Post';
 import { useEffect, useState } from 'react';
 
-const useFetchUserPosts = () => {
+const useFetchUserPosts = (id = '') => {
   const { data: session, status } = useSession();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -14,7 +14,8 @@ const useFetchUserPosts = () => {
   const fetchPosts = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/users/${session?.user.id}/posts`);
+      const userId = id ? id : session?.user.id;
+      const response = await fetch(`/api/users/${userId}/posts`);
       const data = await response.json();
       setPosts(data);
     } catch (error) {

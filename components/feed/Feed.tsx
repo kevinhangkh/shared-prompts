@@ -34,14 +34,13 @@ function Feed() {
       />
 
       {loading ? (
-        <div className='mt-16'>
-          <Image
-            src="/assets/icons/loader.svg"
-            alt="loading"
-            width={70}
-            height={50}
-          />
-        </div>
+        <Image
+          className="mt-16"
+          src="/assets/icons/loader.svg"
+          alt="loading"
+          width={70}
+          height={50}
+        />
       ) : (
         <PromptCardList
           posts={searchText ? searchResults : posts}

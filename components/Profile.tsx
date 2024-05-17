@@ -7,8 +7,8 @@ interface ProfileProps {
   name: string;
   desc: string;
   posts: Post[];
-  handleEdit(post: Post): void;
-  handleDelete(post: Post): void;
+  handleEdit?: (post: Post) => void;
+  handleDelete?: (post: Post) => void;
 }
 
 export default function Profile({

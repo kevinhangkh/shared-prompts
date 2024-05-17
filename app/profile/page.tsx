@@ -4,7 +4,7 @@ import Profile from '@components/Profile';
 import useFetchUserPosts from '@hooks/useFetchUserPosts';
 import { Post } from '../../types/Post';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import useDeletePost from '@hooks/useDeletePost';
 
 interface MyProfileProps {}
