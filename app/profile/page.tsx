@@ -11,7 +11,7 @@ interface MyProfileProps {}
 
 function MyProfile({}: MyProfileProps) {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const { posts, setPosts } = useFetchUserPosts();
   const { deletePost } = useDeletePost();

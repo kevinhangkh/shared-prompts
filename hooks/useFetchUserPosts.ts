@@ -26,10 +26,8 @@ const useFetchUserPosts = (id = '') => {
   };
 
   useEffect(() => {
-    if (status === 'authenticated') {
-      fetchPosts();
-    }
-  }, [status]);
+    fetchPosts();
+  }, []);
 
   return { posts, setPosts, loading };
 };

@@ -2,13 +2,23 @@
 
 import Profile from '@components/Profile';
 import useFetchUserPosts from '@hooks/useFetchUserPosts';
-import { useSearchParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 function UserProfile({ params }) {
+  const router = useRouter();
+  const { data: session } = useSession();
   const searchParams = useSearchParams();
   const name = searchParams.get('name');
 
   const { posts } = useFetchUserPosts(params?.id);
+
+  useEffect(() => {
+    if (session?.user.id === params?.id) {
+      router.push('/profile');
+    }
+  }, [session?.user.id, params?.id]);
 
   return (
     <div>
