@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
 import { Post } from '../../types/Post';
 import useDebounce from '@hooks/useDebounce';
 
@@ -17,7 +17,6 @@ function Searchbar({
   setSearchText,
   setSearchResults,
 }: Props) {
-  
   const filterPosts = (searchText: string): void => {
     const regex = new RegExp(searchText, 'i'); // i flag for case-insensitive search
     const result = [...posts].filter((post) => {
@@ -36,6 +35,10 @@ function Searchbar({
     setSearchText(e.target.value);
     debouncedSearch(e.target.value);
   };
+
+  useEffect(() => {
+    debouncedSearch(searchText);
+  }, [searchText]);
 
   return (
     <form className="relative w-full flex-center">

@@ -5,7 +5,6 @@ import { useState, useEffect, ChangeEvent } from 'react';
 import useFetchPosts from '@hooks/useFetchPosts';
 import PromptCardList from './PromptCardList';
 import { Post } from '../../types/Post';
-import useDebounce from '@hooks/useDebounce';
 import Searchbar from './Searchbar';
 
 function Feed() {
@@ -19,6 +18,10 @@ function Feed() {
       setSearchResults([...posts]);
     }
   }, [posts]);
+
+  const handleTagClick = (tag: string) => {
+    setSearchText(tag);
+  };
 
   return (
     <section className="feed">
@@ -34,7 +37,7 @@ function Feed() {
       ) : (
         <PromptCardList
           posts={searchText ? searchResults : posts}
-          handleTagClick={() => {}}
+          handleTagClick={handleTagClick}
         />
       )}
     </section>

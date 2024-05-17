@@ -5,7 +5,7 @@ import PromptCard from './PromptCard';
 
 interface PromptCardListProps {
   posts: Post[];
-  handleTagClick(): void;
+  handleTagClick(tag: string): void;
 }
 
 function PromptCardList({ posts, handleTagClick }: PromptCardListProps) {
