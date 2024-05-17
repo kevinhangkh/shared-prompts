@@ -6,6 +6,7 @@ import useFetchPosts from '@hooks/useFetchPosts';
 import PromptCardList from './PromptCardList';
 import { Post } from '../../types/Post';
 import Searchbar from './Searchbar';
+import Image from 'next/image';
 
 function Feed() {
   const { posts, loading } = useFetchPosts();
@@ -33,7 +34,14 @@ function Feed() {
       />
 
       {loading ? (
-        <div>{`Loading...`}</div>
+        <div className='mt-16'>
+          <Image
+            src="/assets/icons/loader.svg"
+            alt="loading"
+            width={70}
+            height={50}
+          />
+        </div>
       ) : (
         <PromptCardList
           posts={searchText ? searchResults : posts}
