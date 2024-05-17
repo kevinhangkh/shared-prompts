@@ -5,37 +5,37 @@ import { useState, useEffect, ChangeEvent } from 'react';
 import useFetchPosts from '@hooks/useFetchPosts';
 import PromptCardList from './PromptCardList';
 import { Post } from '../../types/Post';
+import useDebounce from '@hooks/useDebounce';
 
 function Feed() {
   const { posts, loading } = useFetchPosts();
 
   const [searchText, setSearchText] = useState<string>('');
   const [searchResults, setSearchResults] = useState<Post[]>([]);
-  const [searchTimeout, setSearchTimeout] = useState<
-    ReturnType<typeof setTimeout> | undefined
-  >();
 
-  const handleChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-    clearTimeout(searchTimeout); // Clears the timeout
+  useEffect(() => {
+    if (posts) {
+      setSearchResults([...posts]);
+    }
+  }, [posts]);
 
-    setSearchTimeout(
-      setTimeout(() => {
-        const result = filterPosts(e.target.value);
-        setSearchResults(result);
-      }, 1000)
-    );
-  };
-
-  const filterPosts = (searchText: string): Post[] => {
+  const filterPosts = (searchText: string): void => {
     const regex = new RegExp(searchText, 'i'); // i flag for case-insensitive search
-    return [...posts].filter((post) => {
+    const result = [...posts].filter((post) => {
       return (
         regex.test(post.creator.username) ||
         regex.test(post.prompt) ||
         regex.test(post.tag)
       );
     });
+    setSearchResults(result);
+  };
+
+  const debouncedSearch = useDebounce(filterPosts, 1000);
+
+  const handleChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+    debouncedSearch(e.target.value);
   };
 
   return (
