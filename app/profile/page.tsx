@@ -6,12 +6,19 @@ import { Post } from '../../types/Post';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useDeletePost from '@hooks/useDeletePost';
+import { useEffect } from 'react';
 
 interface MyProfileProps {}
 
 function MyProfile({}: MyProfileProps) {
   const router = useRouter();
   const { status } = useSession();
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/'); // Navigate to home page if unauthenticated
+    }
+  }, [status]);
 
   const { posts, setPosts } = useFetchUserPosts();
   const { deletePost } = useDeletePost();
