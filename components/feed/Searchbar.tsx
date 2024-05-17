@@ -37,7 +37,9 @@ function Searchbar({
   };
 
   useEffect(() => {
-    debouncedSearch(searchText);
+    if (searchText) {
+      debouncedSearch(searchText);
+    }
   }, [searchText]);
 
   return (
