@@ -4,14 +4,38 @@ import { useState, useEffect, ChangeEvent } from 'react';
 
 import useFetchPosts from '@hooks/useFetchPosts';
 import PromptCardList from './PromptCardList';
+import { Post } from '../../types/Post';
 
 function Feed() {
   const { posts, loading } = useFetchPosts();
 
   const [searchText, setSearchText] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<Post[]>([]);
+  const [searchTimeout, setSearchTimeout] = useState<
+    ReturnType<typeof setTimeout> | undefined
+  >();
 
   const handleChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
+    clearTimeout(searchTimeout); // Clears the timeout
+
+    setSearchTimeout(
+      setTimeout(() => {
+        const result = filterPosts(e.target.value);
+        setSearchResults(result);
+      }, 1000)
+    );
+  };
+
+  const filterPosts = (searchText: string): Post[] => {
+    const regex = new RegExp(searchText, 'i'); // i flag for case-insensitive search
+    return [...posts].filter((post) => {
+      return (
+        regex.test(post.creator.username) ||
+        regex.test(post.prompt) ||
+        regex.test(post.tag)
+      );
+    });
   };
 
   return (
@@ -30,7 +54,10 @@ function Feed() {
       {loading ? (
         <div>{`Loading...`}</div>
       ) : (
-        <PromptCardList posts={posts} handleTagClick={() => {}} />
+        <PromptCardList
+          posts={searchText ? searchResults : posts}
+          handleTagClick={() => {}}
+        />
       )}
     </section>
   );
