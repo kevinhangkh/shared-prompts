@@ -34,7 +34,7 @@ function MobileNav({
             onClick={() => setToggleDropdown((prev) => !prev)}
           />
           {toggleDropdown && (
-            <div className="dropdown">
+            <div className="dropdown shadow-lg">
               <Link
                 href="/profile"
                 className="dropdown_link"
