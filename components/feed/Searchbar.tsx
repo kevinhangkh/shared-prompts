@@ -3,6 +3,7 @@
 import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
 import { Post } from '../../types/Post';
 import useDebounce from '@hooks/useDebounce';
+import Image from 'next/image';
 
 interface Props {
   posts: Post[];
@@ -36,6 +37,10 @@ function Searchbar({
     debouncedSearch(e.target.value);
   };
 
+  const handleEmptySearch = () => {
+    setSearchText('');
+  };
+
   useEffect(() => {
     if (searchText) {
       debouncedSearch(searchText);
@@ -52,6 +57,16 @@ function Searchbar({
         required
         className="search_input peer"
       />
+      {searchText && (
+        <Image
+          src="/assets/icons/cross.svg"
+          alt="cross"
+          width={20}
+          height={20}
+          className="absolute right-2 cursor-pointer"
+          onClick={handleEmptySearch}
+        />
+      )}
     </form>
   );
 }
