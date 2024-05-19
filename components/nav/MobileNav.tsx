@@ -29,7 +29,7 @@ function MobileNav({
             src={session?.user?.image?.toString()}
             width={37}
             height={37}
-            className="rounder-full"
+            className="rounder-full cursor-pointer"
             alt="profile"
             onClick={() => setToggleDropdown((prev) => !prev)}
           />
