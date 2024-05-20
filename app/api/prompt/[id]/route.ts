@@ -1,8 +1,18 @@
 import Prompt from '@models/prompt';
 import { connectToDB } from '@utils/database';
+import { NextRequest } from 'next/server';
+
+// Interfaces
+interface Params {
+  id: string;
+}
+
+interface RequestContext {
+  params: Params;
+}
 
 // GET
-export const GET = async (req: Request, { params }) => {
+export const GET = async (req: NextRequest, { params }: RequestContext) => {
   try {
     await connectToDB();
 
@@ -19,7 +29,7 @@ export const GET = async (req: Request, { params }) => {
 };
 
 // PATCH
-export const PATCH = async (req: Request, { params }) => {
+export const PATCH = async (req: NextRequest, { params }: RequestContext) => {
   const { prompt, tag } = await req.json();
   try {
     await connectToDB();
@@ -42,7 +52,7 @@ export const PATCH = async (req: Request, { params }) => {
 };
 
 // DELETE
-export const DELETE = async (req: Request, { params }) => {
+export const DELETE = async (req: NextRequest, { params }: RequestContext) => {
   try {
     await connectToDB();
 
