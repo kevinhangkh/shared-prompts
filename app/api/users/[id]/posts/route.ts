@@ -1,7 +1,15 @@
 import Prompt from '@models/prompt';
 import { connectToDB } from '@utils/database';
+import { NextRequest } from 'next/server';
 
-export const GET = async (req: Request, { params }) => {
+interface Params {
+  id: string;
+}
+interface RequestContext {
+  params: Params;
+}
+
+export const GET = async (req: NextRequest, { params }: RequestContext) => {
   // Get the dynamic id from the params
   const { id } = params;
 
