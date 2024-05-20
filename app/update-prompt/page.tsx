@@ -4,15 +4,12 @@ import Form from '@components/form/Form';
 import { Post } from '../../types/Post';
 import { FormEvent, useEffect, useState } from 'react';
 import useFetchPostById from '@hooks/useFetchPostById';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import useUpdatePost from '@hooks/useUpdatePost';
 
 interface UpdatePromptProps {}
 
 function UpdatePrompt({}: UpdatePromptProps) {
-  const searchParams = useSearchParams();
-  const promptId = searchParams.get('id');
-
   const router = useRouter();
 
   const { post: fetchedPrompt, loading } = useFetchPostById();
