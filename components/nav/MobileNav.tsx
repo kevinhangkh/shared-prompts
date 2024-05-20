@@ -26,7 +26,9 @@ function MobileNav({
       {isUserLoggedIn ? (
         <div className="flex">
           <Image
-            src={session?.user?.image?.toString()}
+            src={
+              session?.user?.image?.toString() || `/assets/icons/not-found.svg`
+            }
             width={37}
             height={37}
             className="rounder-full cursor-pointer"

@@ -10,7 +10,6 @@ interface DesktopNavProps {
 }
 
 function DesktopNav({ signOut }: DesktopNavProps) {
-
   const { data: session } = useSession();
   const isUserLoggedIn: boolean = !!session?.user;
 
@@ -28,7 +27,10 @@ function DesktopNav({ signOut }: DesktopNavProps) {
 
           <Link href="/profile" className="">
             <Image
-              src={session?.user?.image?.toString()}
+              src={
+                session?.user?.image?.toString() ||
+                `/assets/icons/not-found.svg`
+              }
               width={37}
               height={37}
               className="rounder-full"
