@@ -2,7 +2,7 @@
 
 import Form from '@components/form/Form';
 import { Post } from '../../types/Post';
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import useFetchPostById from '@hooks/useFetchPostById';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useUpdatePost from '@hooks/useUpdatePost';
@@ -30,7 +30,9 @@ function UpdatePrompt({}: UpdatePromptProps) {
     }
   }, [fetchedPrompt]);
 
-  const updatePrompt = async (event): Promise<void> => {
+  const updatePrompt = async (
+    event: FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     event.preventDefault();
     setSubmitting(true);
 

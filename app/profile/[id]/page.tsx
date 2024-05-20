@@ -6,7 +6,13 @@ import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
-function UserProfile({ params }) {
+interface UserProfileProps {
+  params: {
+    id: string;
+  };
+}
+
+function UserProfile({ params }: UserProfileProps) {
   const router = useRouter();
   const { data: session } = useSession();
   const searchParams = useSearchParams();

@@ -8,9 +8,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import useDeletePost from '@hooks/useDeletePost';
 import { useEffect } from 'react';
 
-interface MyProfileProps {}
-
-function MyProfile({}: MyProfileProps) {
+function MyProfile() {
   const router = useRouter();
   const { status } = useSession();
 
