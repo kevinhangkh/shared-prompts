@@ -2,6 +2,7 @@
 const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ['mongoose'],
+    missingSuspenseWithCSRBailout: false,
   },
   images: {
     remotePatterns: [
@@ -9,8 +10,8 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
         port: '',
-        pathname: '**'
-      }
+        pathname: '**',
+      },
     ],
   },
   webpack(config) {
